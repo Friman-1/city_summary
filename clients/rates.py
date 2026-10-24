@@ -10,6 +10,7 @@ def get_rate(currency="USD"):
 
     data = parse_json(response)
     require(data, "rate")
-    if not isinstance(data["rate"], (int, float)):
+    rate = data["rate"]
+    if isinstance(rate, bool) or not isinstance(rate, (int, float)):
         raise ServiceError("курс пришёл не числом")
     return float(data["rate"])

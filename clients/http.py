@@ -54,6 +54,9 @@ def parse_json(response):
 def require(data, *fields):
     if not isinstance(data, dict):
         raise ServiceError("в ответе ожидался JSON-объект")
+    missing = [field for field in fields if field not in data]
+    if missing:
+        raise ServiceError(f"в ответе не хватает полей: {', '.join(missing)}")
     for field in fields:
         if field not in data:
             raise ServiceError(f"в ответе нет поля {field}")
